@@ -44,3 +44,16 @@ app.post('/reservations', async(req,res) => {
 
 app.listen(PORT,() => console.log('server running on PORT'+ PORT))
 
+
+                    ///ASTRA DB DATA JSON
+// {
+//     "category: "q1 2022",
+//     "title: "Moja mama vari lepsie ako tvoja",
+//     "owner: "Hotel",
+//     "photo: "https://www.freecodecamp.org/news/content/images/size/w150/2020/09/kealan.jpg",
+//     "status: "obsadena",
+//     "priority: 2,
+//     "progress: 40,
+//     "description: "prosim rezervaciu",
+//     "timestamp": "2022-02-11T07:36:17+0000"
+// }
