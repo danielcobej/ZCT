@@ -5,7 +5,6 @@ const Dashboard = () =>{
     const reservation = [
         {
         category: 'q1 2022',
-        color: 'red',
         title: 'Moja mama vari lepsie ako tvoja',
         owner: 'Hotel',
         photo: 'https://www.freecodecamp.org/news/content/images/size/w150/2020/09/kealan.jpg',
