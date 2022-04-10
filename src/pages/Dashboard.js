@@ -10,7 +10,7 @@ const Dashboard = () =>{
         owner: 'Hotel',
         photo: 'https://www.freecodecamp.org/news/content/images/size/w150/2020/09/kealan.jpg',
         status: 'obsadena',
-        priority: 5,
+        priority: 2,
         progress: 40,
         description: 'prosim rezervaciu',
         timestamp: '2022-02-11T07:36:17+0000'
@@ -21,9 +21,9 @@ const Dashboard = () =>{
         title: 'Rezervacia izby',
         owner: 'Hotel',
         photo: 'https://www.freecodecamp.org/news/content/images/size/w150/2020/09/kealan.jpg',
-        status: 'rezervacia',
+        status: 'rezervovana',
         priority: 5,
-        progress: 40,
+        progress: 70,
         description: 'prosim rezervaciu',
         timestamp: '2022-02-11T07:36:17+0000'
         },
@@ -35,11 +35,20 @@ const Dashboard = () =>{
         photo: 'https://www.freecodecamp.org/news/content/images/size/w150/2020/09/kealan.jpg',
         status: 'volna',
         priority: 5,
-        progress: 40,
+        progress: 100,
         description: 'prosim rezervaciu',
         timestamp: '2022-02-11T07:36:17+0000'
         }
         ]
+
+    const colors = [
+        'rgb(255,179,186)',
+        'rgb(255,223,186)',
+        'rgb(255,255,186)',
+        'rgb(186,255,201)',
+        'rgb(186,255,255)'
+    ]
+
 
     const uniqueCategoria = [
         ...new Set(reservation?.map( ({category}) => category))
@@ -60,8 +69,8 @@ const Dashboard = () =>{
                             .map((filteredReservation, _index) =>(
                                 <ReservationCard
                                     id={_index}
+                                    color={colors[categoryIndex] || colors[0]}
                                     reservation={filteredReservation}
-                                    color={filteredReservation.color}
                                 />
                             ))
                         

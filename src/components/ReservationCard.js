@@ -5,20 +5,20 @@ import Obsadenost from './Obsadenost'
 import Delete from './Delete'
 import {Link} from 'react-router-dom'
 
-const ReservationCard =(color,reservation) =>{
+const ReservationCard =({color,reservation}) =>{
     return (
         <div className="reservation-card">
         
-        <Link to={`/ticket/${reservation.documentId}`} id="link">
+        <Link to={`/reservation/${reservation.documentId}`} id="link">
         
-        <div className="reservation-color"></div>
+        <div className="reservation-color" style={{backgroundColor:color}}></div>
         <h3>{reservation.title}</h3>
 
         <PhotoDisplay reservation={reservation}/>
-        <PhotoDisplay status={reservation.status}/>
-        <Status/>
+        {/* <PhotoDisplay status={reservation.status}/> */}
+        <Status status={reservation.status}/>
         <PriorityDisplay priority={reservation.priority}/>
-        <Obsadenost/>
+        <Obsadenost progress={reservation.progress}/>
         
         </Link>
 
