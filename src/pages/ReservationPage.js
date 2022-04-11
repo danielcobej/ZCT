@@ -1,32 +1,57 @@
-import { useState } from "react"
+import { useContext, useEffect, useState } from "react"
 import axios from 'axios'
-import { useNavigate } from "react-router-dom"
+import { useNavigate, useParams } from "react-router-dom"
+import CategoriesContext from "../context"
 
-const ReservationPage = () => {
+const ReservationPage = ({ editMode }) => {
+    const {categories, setCategories} = useContext(CategoriesContext)
 
     const [formData, setFormData] = useState({
         status: 'not started',
         progress: 0,
+        category: categories[0],
         timestamp: new Date().toISOString()
     })
-
-    const editMode = false
-    const navigate = useNavigate() 
-
+    // 
+    // const editMode = false
+    // const { categories, setCategories } = useContext(CategoriesContext)
+    const navigate = useNavigate()
+    let { id } = useParams()
+    // 
     const handleSubmit = async (e) => {
         e.preventDefault()
 
-        if(!editMode){
-            const response = await axios.post('http://localhost:8000/reservations',{
+        if (editMode) {
+            const response = await axios.put(`http://localhost:8000/reservation/${id}`, {
+                data: formData
+            })
+            const success = response.status === 200
+            if (success) {
+                navigate('/')
+            }
+        }
+
+        if (!editMode) {
+            const response = await axios.post('http://localhost:8000/reservation', {
                 formData
             })
             const success = response.status === 200
-            if(success){
+            if (success) {
                 navigate('/')
             }
         }
 
     }
+
+    const fetchData = async () => {
+        const response = await axios.get(`http://localhost:8000/reservations/${id}`)
+        setFormData(response.data.data)
+    }
+
+    useEffect(() => {
+        if (editMode) fetchData()
+    }, [])
+
 
 
 
@@ -40,8 +65,6 @@ const ReservationPage = () => {
         })
         )
     }
-
-    const categories = ['test1', 'test2']
 
     console.log(formData)
 
@@ -74,7 +97,7 @@ const ReservationPage = () => {
                         <label>Category</label>
                         <select
                             name="category"
-                            value={formData.category}
+                            value={formData.category || 'New Category'}
                             onChange={handleChange}
                         >
 
@@ -180,7 +203,7 @@ const ReservationPage = () => {
                     </section>
 
                     <section>
-                    <label htmlFor="owner">Owner </label>
+                        <label htmlFor="owner">Owner </label>
                         <input
                             id="owner"
                             name="owner"
@@ -200,9 +223,9 @@ const ReservationPage = () => {
                         />
                         <div className="img-preview">
                             {formData.photo && (
-                            
-                            <img src={formData.photo} alt="photo preview"/>
-                            
+
+                                <img src={formData.photo} alt="photo preview" />
+
                             )}
                         </div>
                     </section>

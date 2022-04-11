@@ -1,7 +1,12 @@
-const Delete =() =>{
+import axios from "axios"
+
+const Delete =({documentId}) =>{
     
-    const deleteReservation = () =>{
-        console.log('deleted')
+    const deleteReservation = async () =>{
+        const response = await axios.delete(`http://localhost:8000/reservations/${documentId}`)
+        const success = response.status == 200
+        if(success) window.location.reload()
+
     }
     
     return (

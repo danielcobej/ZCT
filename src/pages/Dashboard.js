@@ -1,44 +1,40 @@
 import ReservationCard from '../components/ReservationCard'
+import axios from 'axios'
+import { useState, useEffect, useContext } from 'react'
+import CategoriesContext from '../context'
 
-const Dashboard = () =>{
 
-    const reservation = [
-        {
-        category: 'q1 2022',
-        title: 'Moja mama vari lepsie ako tvoja',
-        owner: 'Hotel',
-        photo: 'https://www.freecodecamp.org/news/content/images/size/w150/2020/09/kealan.jpg',
-        status: 'obsadena',
-        priority: 2,
-        progress: 40,
-        description: 'prosim rezervaciu',
-        timestamp: '2022-02-11T07:36:17+0000'
-        },
-        {
-        category: 'q2 2022',
-        color: 'red',
-        title: 'Rezervacia izby',
-        owner: 'Hotel',
-        photo: 'https://www.freecodecamp.org/news/content/images/size/w150/2020/09/kealan.jpg',
-        status: 'rezervovana',
-        priority: 5,
-        progress: 70,
-        description: 'prosim rezervaciu',
-        timestamp: '2022-02-11T07:36:17+0000'
-        },
-        {
-        category: 'q3 2022',
-        color: 'red',
-        title: 'Rezervacia izbyhah',
-        owner: 'Hotel',
-        photo: 'https://www.freecodecamp.org/news/content/images/size/w150/2020/09/kealan.jpg',
-        status: 'volna',
-        priority: 5,
-        progress: 100,
-        description: 'prosim rezervaciu',
-        timestamp: '2022-02-11T07:36:17+0000'
-        }
-        ]
+const Dashboard = () => {
+
+    const [reservations , setReservations] = useState(null)
+    const {categories, setCategories} = useContext(CategoriesContext)
+
+    useEffect(async() => {
+       const response =  await axios.get('http://localhost:8000/reservations')
+
+        const dataObject = response.data.data
+        const arrayOfKeys = Object.keys(dataObject)
+        const arrayOfData = Object.keys(dataObject).map((key) => dataObject[key])
+
+        // console.log('array of keys', arrayOfKeys)
+        // console.log('array of data', arrayOfData)
+        const formattedArray = []
+        arrayOfKeys.forEach((key, index)=> {
+            const formattedData = {...arrayOfData[index]}
+            formattedData['documentId'] = key
+            formattedArray.push(formattedData)
+
+        })
+        // console.log(formattedArray)
+        setReservations(formattedArray)
+
+    },[])
+
+    useEffect(()=>{
+        setCategories([...new Set(reservations?.map(({category}) => category))])
+    },[reservations])
+
+    console.log(categories)
 
     const colors = [
         'rgb(255,179,186)',
@@ -48,9 +44,8 @@ const Dashboard = () =>{
         'rgb(186,255,255)'
     ]
 
-
     const uniqueCategoria = [
-        ...new Set(reservation?.map( ({category}) => category))
+        ...new Set(reservations?.map( ({category}) => category))
     ]
     
 
@@ -61,10 +56,10 @@ const Dashboard = () =>{
             <h1>Rezervacie</h1>
             <div className="reservation-container">
                 {/* <ReservationCard/> */}
-                {reservation && uniqueCategoria?.map((uniqueCategoria, categoryIndex)=>(
+                {reservations && uniqueCategoria?.map((uniqueCategoria, categoryIndex)=>(
                     <div key={categoryIndex}>
                         <h3>{uniqueCategoria}</h3>
-                        {reservation.filter(reservation => reservation.category === uniqueCategoria)
+                        {reservations.filter(reservation => reservation.category === uniqueCategoria)
                             .map((filteredReservation, _index) =>(
                                 <ReservationCard
                                     id={_index}

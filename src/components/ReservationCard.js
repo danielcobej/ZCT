@@ -22,7 +22,7 @@ const ReservationCard =({color,reservation}) =>{
         
         </Link>
 
-        <Delete/>
+        <Delete documentId={reservation.documentId}/>
         </div>
     )
 }
