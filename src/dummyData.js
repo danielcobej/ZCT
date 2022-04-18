@@ -1,14 +1,14 @@
     // const reservations = [
     //     {
-    //     category: 'q1 2022',
-    //     title: 'Moja mama vari lepsie ako tvoja',
-    //     owner: 'Hotel',
-    //     photo: 'https://www.freecodecamp.org/news/content/images/size/w150/2020/09/kealan.jpg',
-    //     status: 'obsadena',
-    //     priority: 2,
-    //     progress: 40,
-    //     description: 'prosim rezervaciu',
-    //     timestamp: '2022-02-11T07:36:17+0000'
+    //     "category": "q1 2022",
+    //     "title": "Moja mama vari lepsie ako tvoja",
+    //     "owner": "Hotel",
+    //     "photo": "https://www.freecodecamp.org/news/content/images/size/w150/2020/09/kealan.jpg",
+    //     "status": "obsadena",
+    //     "priority": 2,
+    //     "progress": 40,
+    //     "description": "prosim rezervaciu",
+    //     "timestamp": "2022-02-11T07:36:17+0000"
     //     },
     //     {
     //     category: 'q2 2022',
