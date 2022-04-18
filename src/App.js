@@ -16,8 +16,8 @@ function App() {
       <Routes>
 
       <Route path='/' element={<Dashboard/>}/>        
-      <Route path='/reservations' element={<ReservationPage/>}/>
-      <Route path='/reservations/:id' element={<ReservationPage editMode={true}/>}/>
+      <Route path='/reservation' element={<ReservationPage/>}/>
+      <Route path='/reservation/:id' element={<ReservationPage editMode={true}/>}/>
 
       </Routes>
       </BrowserRouter>

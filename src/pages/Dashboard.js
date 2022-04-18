@@ -6,11 +6,11 @@ import CategoriesContext from '../context'
 
 const Dashboard = () => {
 
-    const [reservations , setReservations] = useState(null)
-    const {categories, setCategories} = useContext(CategoriesContext)
+    const [reservations, setReservations] = useState(null)
+    const { categories, setCategories } = useContext(CategoriesContext)
 
-    useEffect(async() => {
-       const response =  await axios.get('http://localhost:8000/reservations')
+    useEffect(async () => {
+        const response = await axios.get('http://localhost:8000/reservations')
 
         const dataObject = response.data.data
         const arrayOfKeys = Object.keys(dataObject)
@@ -19,20 +19,20 @@ const Dashboard = () => {
         // console.log('array of keys', arrayOfKeys)
         // console.log('array of data', arrayOfData)
         const formattedArray = []
-        arrayOfKeys.forEach((key, index)=> {
-            const formattedData = {...arrayOfData[index]}
+        arrayOfKeys.forEach((key, index) => {
+            const formattedData = { ...arrayOfData[index] }
             formattedData['documentId'] = key
             formattedArray.push(formattedData)
 
         })
-        // console.log(formattedArray)
+
         setReservations(formattedArray)
 
-    },[])
+    }, [])
 
-    useEffect(()=>{
-        setCategories([...new Set(reservations?.map(({category}) => category))])
-    },[reservations])
+    useEffect(() => {
+        setCategories([...new Set(reservations?.map(({ category }) => category))])
+    }, [reservations])
 
     console.log(categories)
 
@@ -45,9 +45,9 @@ const Dashboard = () => {
     ]
 
     const uniqueCategoria = [
-        ...new Set(reservations?.map( ({category}) => category))
+        ...new Set(reservations?.map(({ category }) => category))
     ]
-    
+
 
     // console.log(uniqueCategoria)
 
@@ -55,26 +55,20 @@ const Dashboard = () => {
         <div className="dashboard">
             <h1>Rezervacie</h1>
             <div className="reservation-container">
-                {/* <ReservationCard/> */}
-                {reservations && uniqueCategoria?.map((uniqueCategoria, categoryIndex)=>(
+                {reservations && uniqueCategoria?.map((uniqueCategoria, categoryIndex) => (
                     <div key={categoryIndex}>
                         <h3>{uniqueCategoria}</h3>
-                        {reservations.filter(reservation => reservation.category === uniqueCategoria)
-                            .map((filteredReservation, _index) =>(
+                        {reservations.filter((reservation) => reservation.category === uniqueCategoria)
+                            .map((filteredReservation, _index) => (
                                 <ReservationCard
                                     id={_index}
                                     color={colors[categoryIndex] || colors[0]}
                                     reservation={filteredReservation}
                                 />
-                            ))
-                        
-                        }
+                            ))}
                     </div>
                 ))}
-
-
             </div>
-
         </div>
     )
 }

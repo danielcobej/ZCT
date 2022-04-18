@@ -8,20 +8,16 @@ import {Link} from 'react-router-dom'
 const ReservationCard =({color,reservation}) =>{
     return (
         <div className="reservation-card">
+        <div className="reservation-color" style={{backgroundColor:color}}></div>
         
         <Link to={`/reservation/${reservation.documentId}`} id="link">
-        
-        <div className="reservation-color" style={{backgroundColor:color}}></div>
         <h3>{reservation.title}</h3>
-
         <PhotoDisplay reservation={reservation}/>
-        {/* <PhotoDisplay status={reservation.status}/> */}
         <Status status={reservation.status}/>
-        <PriorityDisplay priority={reservation.priority}/>
+        <PriorityDisplay priority={Number(reservation.priority)}/>
+        <Obsadenost progress={Number(reservation.progress)}/>
         <Obsadenost progress={reservation.progress}/>
-        
         </Link>
-
         <Delete documentId={reservation.documentId}/>
         </div>
     )

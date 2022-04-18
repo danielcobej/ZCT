@@ -5,6 +5,9 @@ import CategoriesContext from "../context"
 
 const ReservationPage = ({ editMode }) => {
     const {categories, setCategories} = useContext(CategoriesContext)
+    const navigate = useNavigate()
+    let { id } = useParams()
+
 
     const [formData, setFormData] = useState({
         status: 'not started',
@@ -12,17 +15,13 @@ const ReservationPage = ({ editMode }) => {
         category: categories[0],
         timestamp: new Date().toISOString()
     })
-    // 
-    // const editMode = false
-    // const { categories, setCategories } = useContext(CategoriesContext)
-    const navigate = useNavigate()
-    let { id } = useParams()
-    // 
+    
+
     const handleSubmit = async (e) => {
         e.preventDefault()
 
         if (editMode) {
-            const response = await axios.put(`http://localhost:8000/reservation/${id}`, {
+            const response = await axios.put(`http://localhost:8000/reservations/${id}`, {
                 data: formData
             })
             const success = response.status === 200
@@ -32,7 +31,8 @@ const ReservationPage = ({ editMode }) => {
         }
 
         if (!editMode) {
-            const response = await axios.post('http://localhost:8000/reservation', {
+            console.log("spracuvam")
+            const response = await axios.post('http://localhost:8000/reservations', {
                 formData
             })
             const success = response.status === 200
@@ -45,6 +45,7 @@ const ReservationPage = ({ editMode }) => {
 
     const fetchData = async () => {
         const response = await axios.get(`http://localhost:8000/reservations/${id}`)
+        console.log("FETCHING",response)
         setFormData(response.data.data)
     }
 
